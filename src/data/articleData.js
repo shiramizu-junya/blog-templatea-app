@@ -1,6 +1,6 @@
 export const articlesData = [
 	{
-		id: 1,
+		id: Math.floor(Math.random() * 1000),
 		title: 'React Hooksの基礎',
 		content: `React Hooksについての詳細な解説がここに入ります...
 		さらに内容が続きます...`,
@@ -9,7 +9,7 @@ export const articlesData = [
 		date: '2024-12-01',
 	},
 	{
-		id: 2,
+		id: Math.floor(Math.random() * 1000),
 		title: 'TypeScriptでの型定義',
 		content: `TypeScriptでの型定義についての詳細な解説がここに入ります...
 			さらに内容が続きます..`,
@@ -18,7 +18,7 @@ export const articlesData = [
 		date: '2024-12-02',
 	},
 	{
-		id: 3,
+		id: Math.floor(Math.random() * 1000),
 		title: 'Next.jsで始めるSSR',
 		content: `Next.jsでのサーバーサイドレンダリングについての詳細な解説がここに入ります...`,
 		category: 'Next.js',

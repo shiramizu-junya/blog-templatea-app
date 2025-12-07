@@ -1,16 +1,26 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { articlesData } from '../data/articleData';
 
 export const ArticleNew = () => {
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
 	const [category, setCategory] = useState('');
+	const [status, setStatus] = useState('下書き');
+	const [date, setDate] = useState('');
 	const navigate = useNavigate();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		// 保存処理
-		console.log('保存:', { title, content, category });
+		articlesData.push({
+			id: Math.floor(Math.random() * 1000),
+			title,
+			content,
+			category,
+			status,
+			date,
+		});
 		// 保存後、一覧ページに遷移
 		navigate('/articles/list');
 	};
@@ -31,19 +41,45 @@ export const ArticleNew = () => {
 					/>
 				</div>
 
-				<div>
-					<label className="block text-sm font-medium text-gray-700 mb-1">カテゴリ</label>
-					<select
-						value={category}
-						onChange={(e) => setCategory(e.target.value)}
-						required
-						className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-					>
-						<option value="">選択してください</option>
-						<option value="React">React</option>
-						<option value="TypeScript">TypeScript</option>
-						<option value="Next.js">Next.js</option>
-					</select>
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+					<div>
+						<label className="block text-sm font-medium text-gray-700 mb-1">カテゴリ</label>
+						<select
+							value={category}
+							onChange={(e) => setCategory(e.target.value)}
+							required
+							className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+						>
+							<option value="">選択してください</option>
+							<option value="React">React</option>
+							<option value="TypeScript">TypeScript</option>
+							<option value="Next.js">Next.js</option>
+						</select>
+					</div>
+
+					<div>
+						<label className="block text-sm font-medium text-gray-700 mb-1">ステータス</label>
+						<select
+							value={status}
+							onChange={(e) => setStatus(e.target.value)}
+							required
+							className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+						>
+							<option value="下書き">下書き</option>
+							<option value="公開">公開</option>
+						</select>
+					</div>
+
+					<div>
+						<label className="block text-sm font-medium text-gray-700 mb-1">公開日</label>
+						<input
+							type="date"
+							value={date}
+							onChange={(e) => setDate(e.target.value)}
+							required
+							className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+						/>
+					</div>
 				</div>
 
 				<div>
