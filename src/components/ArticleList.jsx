@@ -3,18 +3,14 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { ArticleSearch } from './ArticleSearch';
 
 export const ArticleList = () => {
-	// useSearchParams: クエリパラメータを読み書きするためのフック
 	const [searchParams] = useSearchParams();
 
-	// クエリパラメータから値を取得
 	const categoryFilter = searchParams.get('category') || '';
 	const searchQuery = searchParams.get('search') || '';
 	const statusFilter = searchParams.get('status') || '';
 
-	// カテゴリ一覧を取得
 	const categories = [...new Set(articlesData.map((article) => article.category))];
 
-	// フィルタリングされた記事一覧
 	const filteredArticles = articlesData.filter((article) => {
 		const matchesCategory = categoryFilter === '' || article.category === categoryFilter;
 		const matchesSearch =
@@ -29,7 +25,6 @@ export const ArticleList = () => {
 				<h1 className="text-2xl font-bold text-gray-900">記事一覧</h1>
 			</div>
 
-			{/* 検索コンポーネント */}
 			<ArticleSearch categories={categories} />
 
 			<div className="overflow-x-auto">
@@ -64,6 +59,7 @@ export const ArticleList = () => {
 								<td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
 									<Link
 										to={`/articles/detail/${article.id}`}
+										state={article} // 記事データをstateとして渡す
 										className="text-gray-900 hover:text-slate-700 hover:underline underline-offset-4 transition-colors"
 									>
 										{article.title}
