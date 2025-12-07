@@ -1,14 +1,39 @@
 import { articlesData } from '../data/articleData';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
+import { ArticleSearch } from './ArticleSearch';
 
 export const ArticleList = () => {
+	// useSearchParams: クエリパラメータを読み書きするためのフック
+	const [searchParams] = useSearchParams();
+
+	// クエリパラメータから値を取得
+	const categoryFilter = searchParams.get('category') || '';
+	const searchQuery = searchParams.get('search') || '';
+	const statusFilter = searchParams.get('status') || '';
+
+	// カテゴリ一覧を取得
+	const categories = [...new Set(articlesData.map((article) => article.category))];
+
+	// フィルタリングされた記事一覧
+	const filteredArticles = articlesData.filter((article) => {
+		const matchesCategory = categoryFilter === '' || article.category === categoryFilter;
+		const matchesSearch =
+			searchQuery === '' || article.title.toLowerCase().includes(searchQuery.toLowerCase());
+		const matchesStatus = statusFilter === '' || article.status === statusFilter;
+		return matchesCategory && matchesSearch && matchesStatus;
+	});
+
 	return (
 		<div>
 			<div className="flex justify-between items-center mb-6">
 				<h1 className="text-2xl font-bold text-gray-900">記事一覧</h1>
 			</div>
 
+			{/* 検索コンポーネント */}
+			<ArticleSearch categories={categories} />
+
 			<div className="overflow-x-auto">
+				<p className="text-sm text-gray-600 mb-2">検索結果: {filteredArticles.length}件</p>
 				<table className="min-w-full divide-y divide-gray-200">
 					<thead className="bg-gray-50">
 						<tr>
@@ -17,6 +42,9 @@ export const ArticleList = () => {
 							</th>
 							<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 								タイトル
+							</th>
+							<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+								カテゴリ
 							</th>
 							<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 								公開日
@@ -30,17 +58,19 @@ export const ArticleList = () => {
 						</tr>
 					</thead>
 					<tbody className="bg-white divide-y divide-gray-200">
-						{articlesData.map((article) => (
+						{filteredArticles.map((article) => (
 							<tr key={article.id} className="hover:bg-gray-50 transition-colors">
 								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{article.id}</td>
 								<td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-									{/* 動的にidを含めたリンク */}
 									<Link
 										to={`/articles/detail/${article.id}`}
 										className="text-gray-900 hover:text-slate-700 hover:underline underline-offset-4 transition-colors"
 									>
 										{article.title}
 									</Link>
+								</td>
+								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+									{article.category}
 								</td>
 								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 									{article.date}
