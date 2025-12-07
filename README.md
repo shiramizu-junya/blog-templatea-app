@@ -1,16 +1,103 @@
-# React + Vite
+# Blog Template App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React Router の学習用ブログ管理アプリケーションです。
 
-Currently, two official plugins are available:
+## 📝 アプリの説明
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+このアプリは React Router の各機能を学習するためのサンプルアプリケーションです。
 
-## React Compiler
+### 学習できる機能
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **基本的なルーティング**: `BrowserRouter`, `Routes`, `Route`
+- **ナビゲーション**: `Link`, `useNavigate`
+- **ネストされたルート**: `Outlet` を使った子ルート
+- **動的パラメータ**: `useParams` で URL パラメータを取得
+- **クエリパラメータ**: `useSearchParams` でフィルター・検索機能
 
-## Expanding the ESLint configuration
+### 主な画面
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+| パス                   | 説明                                 |
+| ---------------------- | ------------------------------------ |
+| `/`                    | ホーム                               |
+| `/articles/list`       | 記事一覧（検索・フィルター機能付き） |
+| `/articles/new`        | 記事作成                             |
+| `/articles/detail/:id` | 記事詳細                             |
+| `/contact`             | お問い合わせ                         |
+
+## 🛠 技術スタック
+
+| 技術             | バージョン    |
+| ---------------- | ------------- |
+| React            | ^19.2.0       |
+| React Router DOM | ^7.10.1       |
+| Tailwind CSS     | ^4.1.17       |
+| Vite             | ^7.2.4        |
+| Node.js          | 18.x 以上推奨 |
+
+## 🚀 環境構築
+
+### 前提条件
+
+- Node.js 18.x 以上
+- npm または yarn
+
+### インストール
+
+```bash
+# リポジトリをクローン
+git clone https://github.com/shiramizu-junya/blog-templatea-app.git
+
+# ディレクトリに移動
+cd blog-template-app
+
+# 依存関係をインストール
+npm install
+```
+
+## 💻 起動方法
+
+### 開発サーバー
+
+```bash
+npm run dev
+```
+
+ブラウザで http://localhost:5173 を開きます。
+
+### 本番ビルド
+
+```bash
+# ビルド
+npm run build
+
+# プレビュー
+npm run preview
+```
+
+### Lint
+
+```bash
+npm run lint
+```
+
+## 📁 ディレクトリ構成
+
+```
+src/
+├── components/
+│   ├── ArticleDetail.jsx  # 記事詳細（useParams）
+│   ├── ArticleList.jsx    # 記事一覧（useSearchParams）
+│   ├── ArticleNew.jsx     # 記事作成（useNavigate）
+│   ├── ArticleSearch.jsx  # 検索コンポーネント（useSearchParams）
+│   ├── Articles.jsx       # 記事管理レイアウト（Outlet）
+│   ├── Contact.jsx        # お問い合わせ
+│   └── Home.jsx           # ホーム
+├── data/
+│   └── articleData.js     # サンプルデータ
+├── router/
+│   ├── Router.jsx         # メインルーター設定
+│   └── articlesRoutes.jsx # 記事関連のルート定義
+├── App.jsx
+├── main.jsx
+└── index.css
+```
